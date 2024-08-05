@@ -3,49 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Task</title>
 </head>
 <body>
     <header>
-        <nav>
-            <h1>To-Do List</h1>
-        </nav>
+        <h1>Gestor de tareas</h1>
     </header>
     <main>
-        <section>
-            <form id="add_new_task" method="post">
-                <fieldset >
-                <legend>
-                        <h2>Add New Task</h2>
-                    </legend>
-                    <div>
-                        <label>Add New task
-                            <input type="text" id="task" placeholder="Add New task">
-                        </label>
-                    </div>
-                    <div>
-                        <label>Date / Hour
-                            <input type="datetime-local" id="task-time" >
-                        </label>
-                    </div>
-                    <div>
-                        <label> Relevance
-                            <select id="relevance-option">
-                                <option id="urgent">Urgent</option>
-                                <option id="fazt">Fazt</option>
-                                <option id="medium">medium</option>
-                                <option id="normal">Normal</option>
-                            </select>
-                        </label>
-                    </div>
-                    <button id="add">Add</button>
-                </fieldset>
-            </form>
-        </section>
-        <section id="task-breakdown">
-            <h2>Task</h2>
-            <section id="task-breakdown"></section>
-        </section>
+        <h3>Add New Task</h3>
+        <form method="post" id="new_task">
+            <fieldset>
+                <div>
+                    <label>Name Task
+                        <input type="text" id="name_task" placeholder="Writing new task" >
+                    </label>
+                </div>
+                <div>
+                    <label>Deadline
+                        <input type="date" id="date_task" placeholder="Writing new task" >
+                    </label>
+                </div>
+                <div>
+                    <label>Relevance
+                        <select id="relevance-option">
+                            <option value="urgent">Urgent</option>
+                            <option value="normal">Normal</option>
+                            <option value="fazt">Normal</option>
+                            <option value="i_take_my_time">I'll take my time</option>
+                        </select>
+                    </label>
+                </div>
+                <button id="add_new_task">Add Task</button>
+            </fieldset>
+        </form>
+        <section id="tools_task"></section>
     </main>
     <script src="/script.js"></script>
 </body>
