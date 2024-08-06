@@ -8,31 +8,33 @@
 </head>
 <body>
     <header>
-        <h1>Gestor de tareas</h1>
+        <h1>Gestor de tareas📝</h1>
     </header>
     <main>
-        <h3>Add New Task</h3>
         <form method="post" id="new_task">
+            <h3 class="title_new_task">Add New Task</h3>
             <fieldset>
                 <div>
-                    <label>Name Task
+                    <label>
                         <input type="text" id="name_task" placeholder="Writing new task" >
                     </label>
                 </div>
-                <div>
-                    <label>Deadline
-                        <input type="date" id="date_task" placeholder="Writing new task" >
-                    </label>
-                </div>
-                <div>
-                    <label>Relevance
-                        <select id="relevance-option">
-                            <option value="urgent">Urgent</option>
-                            <option value="normal">Normal</option>
-                            <option value="fazt">Normal</option>
-                            <option value="i_take_my_time">I'll take my time</option>
-                        </select>
-                    </label>
+                <div class="relevance-date">
+                    <div>
+                        <label>
+                            <input type="date" id="date_task" placeholder="Writing new task" >
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <select id="relevance-option">
+                                <option value="urgent">Urgent</option>
+                                <option value="normal">Normal</option>
+                                <option value="fazt">Normal</option>
+                                <option value="i_take_my_time">I'll take my time</option>
+                            </select>
+                        </label>
+                    </div>
                 </div>
                 <div>
                     <button class="block_task" id="add_new_task">Add Task</button>
@@ -40,7 +42,22 @@
                 </div>
             </fieldset>
         </form>
-        <section id="tools_task"></section>
+        <section class="tools_task" id="tools_task">
+            <h3>Tools Task</h3>
+            <div>
+                            <header class="task-header">
+                <h3 id="${ID}-name-task">${newTask.nameTask}</h3>
+            </header>
+            <div class="task-details">
+                <p id="${ID}-relevance-task" > ${newTask.relevanceOption}</p>
+                <p id="${ID}-date-task" > ${newTask.dateTask}</p>
+            </div>
+            <div>
+                <button  >Eliminar</button>
+                <button  >Editar</button>
+                </div>
+            </div>
+        </section>
     </main>
     <script src="/script.js"></script>
 </body>
