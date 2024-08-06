@@ -1,4 +1,5 @@
 const toolsTask  = document.getElementById("tools_task")
+const Data = localStorage
 
 class task{
     constructor(nameTask,dateTask, relevanceOption){
@@ -11,37 +12,117 @@ class task{
 
 class taskUI{
     addTask(newTask){
+        if (Data.length === 0){
+            const h2Element = toolsTask.querySelector('h2');
+            toolsTask.remove(h2Element)
+        }
         const boxTask = document.createElement("div")
-        const ID = localStorage.length + 1
+        const ID = Data.length + 1
         boxTask.setAttribute("id", ID)
-        boxTask.innerHTML = `
-            <strong>${newTask.nameTask}</strong>
-            <strong>${newTask.dateTask}</strong>
-            <strong>${newTask.relevanceOption}</strong>
+        boxTask.innerHTML = `       
+            <header class="task-header">
+                <h3 id="${ID}-name-task">${newTask.nameTask}</h3>
+            </header>
+            <div class="task-details">
+                <p id="${ID}-relevance-task" > ${newTask.relevanceOption}</p>
+                <p id="${ID}-date-task" > ${newTask.dateTask}</p>
+            </div>
+            <div>
+                <button onclick="deleteTask(${ID})" >Eliminar</button>
+                <button onclick="update(${ID})" >Editar</button>
+            </div>
         `
-        toolsTask.append(boxTask)
-        localStorage.setItem(ID, JSON.stringify(newTask))
+        toolsTask.appendChild(boxTask)
+        Data.setItem(ID, JSON.stringify({...newTask}))
     }
     deleteTask(ID){
-        console.log("")
+        const element = document.getElementById(ID)
+        toolsTask.removeChild(element)
+        Data.removeItem(ID)
     }
     readTask(){
-        console.log("")
+        if (Data.length != 0) {
+            for (let i = 1; i <= Data.length; i+=1 ){
+                const taskClave = Data.key(i)
+                const task = Data.getItem(taskClave)
+                const taskData = JSON.parse(task)
+                const boxTask = document.createElement("div")
+                boxTask.setAttribute("id", taskClave)
+                boxTask.innerHTML = `       
+                    <header class="task-header">
+                        <h3 id="${taskClave}-name-task">${taskData.nameTask}</h3>
+                    </header>
+                    <div class="task-details">
+                        <p id="${taskClave}-relevance-task" > ${taskData.relevanceOption}</p>
+                        <p id="${taskClave}-date-task" > ${taskData.dateTask}</p>
+                    </div>
+                    <div>
+                        <button onclick="deleteTask(${taskClave})" >Eliminar</button>
+                        <button onclick="update(${taskClave})" >Editar</button>
+                    </div>
+                `
+                toolsTask.appendChild(boxTask)
 
+            }
+        } else {
+            const elementH2 = document.createElement("h2")
+            elementH2.textContent = "A un no existen tarea"
+            toolsTask.appendChild(elementH2)
+        }
     }
-    update(ID){
-        console.log("")
+    updateTask(ID, setTask){
+        const elementNameTask = document.getElementById(ID+"-name-task")
+        const elementRelevanceTask = document.getElementById(ID+"-relevance-task")
+        const elementDateTask = document.getElementById(ID+"-date-task")
+        elementNameTask.textContent = setTask.nameTask
+        elementRelevanceTask.textContent = setTask.relevanceOption
+        elementDateTask.textContent = setTask.dateTask
+
+        const updateNewTask = document.getElementById("update_new_task")
+        const newTask = document.getElementById("add_new_task")
+        updateNewTask.setAttribute("class", "none_task")
+        newTask.setAttribute("class", "block_task")
+
+        Data.setItem(ID, JSON.stringify({...setTask}))
+
+
     }
     deleteTaskAll(){
-
-        console.log("")
-
-
+        Data.clear()
     }
+}
+
+
+const UI = new taskUI()
+const deleteTask=(ID)=>{
+    UI.deleteTask(ID)
+}
+
+const update=(ID)=>{
+    const nameTask = document.getElementById("name_task") 
+    const dateTask = document.getElementById("date_task")
+    const relevanceOption = document.getElementById("relevance-option")
+    const getTask = Data.getItem(ID)
+    const taskData = JSON.parse(getTask)
+
+    nameTask.value = taskData.nameTask
+    dateTask.value = taskData.dateTask
+    relevanceOption.value = taskData.relevanceOption
+
+    const updateNewTask = document.getElementById("update_new_task")
+    const newTask = document.getElementById("add_new_task")
+    updateNewTask.setAttribute("class", "block_task")
+    newTask.setAttribute("class", "none_task")
+
+    updateNewTask.addEventListener("click", (e)=>{
+        e.preventDefault()
+        const setTask = new task(nameTask.value, dateTask.value, relevanceOption.value)
+        UI.updateTask(ID, setTask)
+
+    })
 
 
 }
-
 
 document.getElementById("add_new_task").addEventListener("click", (e)=>{
     e.preventDefault()
@@ -50,6 +131,10 @@ document.getElementById("add_new_task").addEventListener("click", (e)=>{
     const relevanceOption = document.getElementById("relevance-option").value
 
     const newTask = new task(nameTask,dateTask, relevanceOption)
-    const UI = new taskUI()
     UI.addTask(newTask)
 })
+
+const main = ()=>{
+    UI.readTask()
+}
+main()
