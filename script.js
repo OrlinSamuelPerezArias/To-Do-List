@@ -9,30 +9,35 @@ class task{
     }
 }
 
-
+const boxTaskUi=(ID, dataTask)=>{
+    const boxTask = document.createElement("div")
+    boxTask.classList.add("task-box")
+    boxTask.setAttribute("id", ID)
+    boxTask.innerHTML = `       
+        <header class="task-header">
+            <h3 id="${ID}-name-task">${dataTask.nameTask}</h3>
+        </header>
+        <div class="task-details">
+            <div >
+                <p > ${dataTask.relevanceOption}  ${dataTask.dateTask}</p>
+            </div>
+            <div>
+                <button onclick="deleteTask(${ID})" ><img src="/assets/borrar.png"></button>
+                <button onclick="update(${ID})" ><img src="/assets/lapiz.png"></button>
+            </div>
+        </div>
+    `
+    return boxTask
+}
 class taskUI{
     addTask(newTask){
         if (Data.length === 0){
             const h2Element = toolsTask.querySelector('h2');
             toolsTask.remove(h2Element)
         }
-        const boxTask = document.createElement("div")
         const ID = Data.length + 1
-        boxTask.setAttribute("id", ID)
-        boxTask.innerHTML = `       
-            <header class="task-header">
-                <h3 id="${ID}-name-task">${newTask.nameTask}</h3>
-            </header>
-            <div class="task-details">
-                <p id="${ID}-relevance-task" > ${newTask.relevanceOption}</p>
-                <p id="${ID}-date-task" > ${newTask.dateTask}</p>
-            </div>
-            <div>
-                <button onclick="deleteTask(${ID})" >Eliminar</button>
-                <button onclick="update(${ID})" >Editar</button>
-            </div>
-        `
-        toolsTask.appendChild(boxTask)
+        const box = boxTaskUi(ID, newTask)
+        toolsTask.appendChild(box)
         Data.setItem(ID, JSON.stringify({...newTask}))
     }
     deleteTask(ID){
@@ -46,22 +51,8 @@ class taskUI{
                 const taskClave = Data.key(i)
                 const task = Data.getItem(taskClave)
                 const taskData = JSON.parse(task)
-                const boxTask = document.createElement("div")
-                boxTask.setAttribute("id", taskClave)
-                boxTask.innerHTML = `       
-                    <header class="task-header">
-                        <h3 id="${taskClave}-name-task">${taskData.nameTask}</h3>
-                    </header>
-                    <div class="task-details">
-                        <p id="${taskClave}-relevance-task" > ${taskData.relevanceOption}</p>
-                        <p id="${taskClave}-date-task" > ${taskData.dateTask}</p>
-                    </div>
-                    <div>
-                        <button onclick="deleteTask(${taskClave})" >Eliminar</button>
-                        <button onclick="update(${taskClave})" >Editar</button>
-                    </div>
-                `
-                toolsTask.appendChild(boxTask)
+                const box = boxTaskUi(taskClave,taskData)
+                toolsTask.appendChild(box)
 
             }
         } else {
@@ -91,8 +82,6 @@ class taskUI{
         Data.clear()
     }
 }
-
-
 const UI = new taskUI()
 const deleteTask=(ID)=>{
     UI.deleteTask(ID)

@@ -96,7 +96,55 @@ form button{
   margin-top:30px ;
   border-radius: 15px;
   width: 85%;
-  background-color: #f7f7f7;
-
 }
 
+.task-box{
+  background-color: #ffffff;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 25px;
+  text-transform: capitalize;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.151) ;
+
+
+}
+.task-box h3{
+  font-style: italic;
+  color: #3a3838;
+
+}
+.task-box p{
+  color: #2d2d2d;
+  font-size: 23px;
+  padding: 0;
+  margin: 0;
+
+}
+.task-details{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.task-details button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+.task-details img:hover{
+  width: 53px;
+
+  
+}
+.task-details img{
+  width: 50px;
+}
+
+form button {
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #C84C4A; /* Un color más oscuro o más claro para el efecto hover */
+}
